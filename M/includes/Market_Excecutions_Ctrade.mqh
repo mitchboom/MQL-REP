@@ -8,9 +8,15 @@
 
 
 
-#include <Trade\Trade.mqh>
-CTrade trade;
+#include <Trade/SymbolInfo.mqh>
+#include <Trade/OrderInfo.mqh>
+#include <Trade/Trade.mqh>
+#include <Trade/PositionInfo.mqh>
+#include <Trade/SymbolInfo.mqh>
 
+CTrade  trade;  // Single trading object
+CPositionInfo PositionInfo;
+CSymbolInfo m_symbol; // Symbol info object
 
 // | Excecute a MARKET BUY
 //----------------------------

@@ -1,32 +1,6 @@
-//+------------------------------------------------------------------+
-//|                                                    Time_5MIN.mqh |
-//|                                  Copyright 2024, MetaQuotes Ltd. |
-//|                                             https://www.mql5.com |
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2024, MetaQuotes Ltd."
-#property link      "https://www.mql5.com"
-//+------------------------------------------------------------------+
-//| defines                                                          |
-//+------------------------------------------------------------------+
-// #define MacrosHello   "Hello, world!"
-// #define MacrosYear    2010
-//+------------------------------------------------------------------+
-//| DLL imports                                                      |
-//+------------------------------------------------------------------+
-// #import "user32.dll"
-//   int      SendMessageA(int hWnd,int Msg,int wParam,int lParam);
-// #import "my_expert.dll"
-//   int      ExpertRecalculate(int wParam,int lParam);
-// #import
-//+------------------------------------------------------------------+
-//| EX5 imports                                                      |
-//+------------------------------------------------------------------+
-// #import "stdlib.ex5"
-//   string ErrorDescription(int error_code);
-// #import
-//+------------------------------------------------------------------+
+
 // Dropdown Variables for Time Input:
-enum DropdownOptions_Time {
+enum ENUM_TIME_5 {
    tijd00_00,/*00:00*/ tijd00_05,/*00:05*/ tijd00_10,/*00:10*/ tijd00_15,/*00:15*/ tijd00_20,/*00:20*/ tijd00_25,/*00:25*/ tijd00_30,/*00:30*/ tijd00_35,/*00:35*/ tijd00_40,/*00:40*/ tijd00_45,/*00:45*/ tijd00_50,/*00:50*/ tijd00_55,/*00:55*/
    tijd01_00,/*01:00*/ tijd01_05,/*01:05*/ tijd01_10,/*01:10*/ tijd01_15,/*01:15*/ tijd01_20,/*01:20*/ tijd01_25,/*01:25*/ tijd01_30,/*01:30*/ tijd01_35,/*01:35*/ tijd01_40,/*01:40*/ tijd01_45,/*01:45*/ tijd01_50,/*01:50*/ tijd01_55,/*01:55*/
    tijd02_00,/*02:00*/ tijd02_05,/*02:05*/ tijd02_10,/*02:10*/ tijd02_15,/*02:15*/ tijd02_20,/*02:20*/ tijd02_25,/*02:25*/ tijd02_30,/*02:30*/ tijd02_35,/*02:35*/ tijd02_40,/*02:40*/ tijd02_45,/*02:45*/ tijd02_50,/*02:50*/ tijd02_55,/*02:55*/
@@ -53,9 +27,9 @@ enum DropdownOptions_Time {
    tijd23_00,/*23:00*/ tijd23_05,/*23:05*/ tijd23_10,/*23:10*/ tijd23_15,/*23:15*/ tijd23_20,/*23:20*/ tijd23_25,/*23:25*/ tijd23_30,/*23:30*/ tijd23_35,/*23:35*/ tijd23_40,/*23:40*/ tijd23_45,/*23:45*/ tijd23_50,/*23:50*/ tijd23_55/*23:55*/
 };
 
-   // Function to convert DropdownOptions_Time to a time string
-string TimeEnumToString(DropdownOptions_Time timeEnum) {
-    switch(timeEnum) {
+// Function to convert DropdownOptions_Time to a time string
+string TimeEnumToString5(ENUM_TIME_5 timeEnum5) {
+    switch(timeEnum5) {
       case tijd00_00: return "00:00"; case tijd00_05: return "00:05"; case tijd00_10: return "00:10"; case tijd00_15: return "00:15"; case tijd00_20: return "00:20"; case tijd00_25: return "00:25"; case tijd00_30: return "00:30"; case tijd00_35: return "00:35"; case tijd00_40: return "00:40"; case tijd00_45: return "00:45"; case tijd00_50: return "00:50"; case tijd00_55: return "00:55";
       case tijd01_00: return "01:00"; case tijd01_05: return "01:05"; case tijd01_10: return "01:10"; case tijd01_15: return "01:15"; case tijd01_20: return "01:20"; case tijd01_25: return "01:25"; case tijd01_30: return "01:30"; case tijd01_35: return "01:35"; case tijd01_40: return "01:40"; case tijd01_45: return "01:45"; case tijd01_50: return "01:50"; case tijd01_55: return "01:55";
       case tijd02_00: return "02:00"; case tijd02_05: return "02:05"; case tijd02_10: return "02:10"; case tijd02_15: return "02:15"; case tijd02_20: return "02:20"; case tijd02_25: return "02:25"; case tijd02_30: return "02:30"; case tijd02_35: return "02:35"; case tijd02_40: return "02:40"; case tijd02_45: return "02:45"; case tijd02_50: return "02:50"; case tijd02_55: return "02:55";

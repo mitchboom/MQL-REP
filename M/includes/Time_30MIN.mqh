@@ -1,7 +1,6 @@
-#property copyright "Copyright 2024, MetaQuotes Ltd."
-#property link      "https://www.mql5.com"
 
-enum DropdownOptions_Time {
+// Dropdown Variables for Time Input:
+enum ENUM_TIME_30 {
    tijd00_00,/*00:00*/ tijd00_30,/*00:30*/
    tijd01_00,/*01:00*/ tijd01_30,/*01:30*/
    tijd02_00,/*02:00*/ tijd02_30,/*02:30*/
@@ -29,8 +28,9 @@ enum DropdownOptions_Time {
 };
 
 
-string TimeEnumToString(DropdownOptions_Time timeEnum) {
-    switch(timeEnum) {
+// Function to convert DropdownOptions_Time to a time string
+string TimeEnumToString(ENUM_TIME_30 timeEnum30) {
+    switch(timeEnum30) {
         case tijd00_00: return "00:00"; case tijd00_30: return "00:30";
         case tijd01_00: return "01:00"; case tijd01_30: return "01:30";
         case tijd02_00: return "02:00"; case tijd02_30: return "02:30";

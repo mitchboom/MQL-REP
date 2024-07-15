@@ -1,37 +1,11 @@
-//+------------------------------------------------------------------+
-//|                                           Lotsize_calculator.mqh |
-//|                                  Copyright 2024, MetaQuotes Ltd. |
-//|                                             https://www.mql5.com |
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2024, MetaQuotes Ltd."
-#property link      "https://www.mql5.com"
-//+------------------------------------------------------------------+
-//| defines                                                          |
-//+------------------------------------------------------------------+
-// #define MacrosHello   "Hello, world!"
-// #define MacrosYear    2010
-//+------------------------------------------------------------------+
-//| DLL imports                                                      |
-//+------------------------------------------------------------------+
-// #import "user32.dll"
-//   int      SendMessageA(int hWnd,int Msg,int wParam,int lParam);
-// #import "my_expert.dll"
-//   int      ExpertRecalculate(int wParam,int lParam);
-// #import
-//+------------------------------------------------------------------+
-//| EX5 imports                                                      |
-//+------------------------------------------------------------------+
-// #import "stdlib.ex5"
-//   string ErrorDescription(int error_code);
-// #import
-//+------------------------------------------------------------------+
+#include <MQL-REP\Inputs.mqh>
 
 
 
 // | POSITION SIZE CALCULATOR NUMBER 1: Lot size calculator for risking a value
 //-----------------------------------------------------------------------------
 
-double Positionsize_value(double openPrice, double slPrice, double risk_value_f){
+double F_positionsize_value(double openPrice, double slPrice, double risk_value_f){
    
    //Creating variables:
    double size=0; //lotsize you want to determine
@@ -66,14 +40,10 @@ double Positionsize_value(double openPrice, double slPrice, double risk_value_f)
 
 
 
-
-
-
-
 // | POSITION SIZE CALCULATOR NUMBER 2: Lot size calculator for risking a percentage
 //----------------------------------------------------------------------------------
 
-double Positionsize_percentage(double openPrice, double slPrice, double risk_percentage_f){
+double F_positionsize_percentage(double openPrice, double slPrice, double risk_percentage_f){
    
    //Creating variables:
    double size=0; //lotsize you want to determine
@@ -111,3 +81,18 @@ double Positionsize_percentage(double openPrice, double slPrice, double risk_per
 }
 
 
+// Function to calculate lot size based on risk type
+double F_calculateLotSize(double entryPrice, double stopLossPrice, double risk, double riskPercentage, int riskType) {
+    double lotSize = 0.0;
+
+    switch(riskType) {
+        case Option1:
+            lotSize = F_positionsize_value(entryPrice, stopLossPrice, risk);
+            break;
+        case Option2:
+            lotSize = F_positionsize_percentage(entryPrice, stopLossPrice, riskPercentage);
+            break;
+    }
+
+    return lotSize;
+}

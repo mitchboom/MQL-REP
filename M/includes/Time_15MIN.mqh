@@ -1,33 +1,6 @@
-//+------------------------------------------------------------------+
-//|                                                   Time_15MIN.mqh |
-//|                                  Copyright 2024, MetaQuotes Ltd. |
-//|                                             https://www.mql5.com |
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2024, MetaQuotes Ltd."
-#property link      "https://www.mql5.com"
-//+------------------------------------------------------------------+
-//| defines                                                          |
-//+------------------------------------------------------------------+
-// #define MacrosHello   "Hello, world!"
-// #define MacrosYear    2010
-//+------------------------------------------------------------------+
-//| DLL imports                                                      |
-//+------------------------------------------------------------------+
-// #import "user32.dll"
-//   int      SendMessageA(int hWnd,int Msg,int wParam,int lParam);
-// #import "my_expert.dll"
-//   int      ExpertRecalculate(int wParam,int lParam);
-// #import
-//+------------------------------------------------------------------+
-//| EX5 imports                                                      |
-//+------------------------------------------------------------------+
-// #import "stdlib.ex5"
-//   string ErrorDescription(int error_code);
-// #import
-//+------------------------------------------------------------------+
 
 // Dropdown Variables for Time Input:
-enum DropdownOptions_Time {
+enum ENUM_TIME_15 {
    tijd00_00,/*00:00*/ tijd00_15,/*00:15*/ tijd00_30,/*00:30*/ tijd00_45,/*00:45*/
    tijd01_00,/*01:00*/ tijd01_15,/*01:15*/ tijd01_30,/*01:30*/ tijd01_45,/*01:45*/
    tijd02_00,/*02:00*/ tijd02_15,/*02:15*/ tijd02_30,/*02:30*/ tijd02_45,/*02:45*/
@@ -56,8 +29,8 @@ enum DropdownOptions_Time {
 
 
 // Function to convert DropdownOptions_Time to a time string
-string TimeEnumToString(DropdownOptions_Time timeEnum) {
-    switch(timeEnum) {
+string TimeEnumToString15(ENUM_TIME_15 timeEnum15) {
+    switch(timeEnum15) {
         case tijd00_00: return "00:00"; case tijd00_15: return "00:15"; case tijd00_30: return "00:30"; case tijd00_45: return "00:45";
         case tijd01_00: return "01:00"; case tijd01_15: return "01:15"; case tijd01_30: return "01:30"; case tijd01_45: return "01:45";
         case tijd02_00: return "02:00"; case tijd02_15: return "02:15"; case tijd02_30: return "02:30"; case tijd02_45: return "02:45";
