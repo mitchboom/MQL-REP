@@ -12,9 +12,9 @@
 //----------------------------------------------------------------- 
 void FIB_Range_Rectangle(){
 
-   datetime Current_time = TimeCurrent();
-   datetime Start_time_range = Start_FIB_timerange;
-   datetime End_time_range = End_FIB_timerange;
+   datetime Current_time = TimeGMT();
+   datetime Start_time_range = Start_FIB;
+   datetime End_time_range = End_FIB;
    
    if(Start_time_range > Current_time){
       long chartID = ChartID();
@@ -64,9 +64,9 @@ void FIB_Range_Rectangle(){
 //------------------------------------------------- 
 void Order_Range_Rectangle(){
 
-   datetime Current_time = TimeCurrent();
-   datetime Start_time_range = Start_FIB_timerange;
-   datetime End_time_range = End_FIB_timerange;
+   datetime Current_time = TimeGMT();
+   datetime Start_time_range = Start_FIB;
+   datetime End_time_range = End_FIB;
    
    datetime Start_Order_range = Start_Order_timerange;
    datetime End_Order_range = End_Order_timerange;
@@ -79,7 +79,7 @@ void Order_Range_Rectangle(){
       if(End_Order_range >= Current_time){
          End_Order_range = Current_time;
       }
-      
+     
       long chartID = ChartID();
       
       int Start_bars = iBarShift(_Symbol,PERIOD_CURRENT,Start_Order_range,true);
@@ -122,9 +122,9 @@ void Order_Range_Rectangle(){
 //-------------------------------------------------------------- 
 void FIB_Levels_In_Range() {
 
-   datetime Current_time = TimeCurrent();
-   datetime Start_time_range = Start_FIB_timerange;
-   datetime End_time_range = End_FIB_timerange;
+   datetime Current_time = TimeGMT();
+   datetime Start_time_range = Start_FIB;
+   datetime End_time_range = End_FIB;
    
    if(Start_time_range > Current_time){
       long chartID = ChartID();
@@ -133,8 +133,8 @@ void FIB_Levels_In_Range() {
       if(End_time_range >= Current_time){
          End_time_range = Current_time;
       }
-      if(End_of_Day >= Current_time){
-         End_of_Day = Current_time;
+      if(Clear_Time >= Current_time){
+         Clear_Time = Current_time;
       }
       
       long chartID = ChartID();
@@ -156,7 +156,7 @@ void FIB_Levels_In_Range() {
           ObjectDelete(0, objectName);
           
       // Create rectangle to highlight the session
-      ObjectCreate(chartID, objectName, OBJ_FIBO,0 , Start_time_bars, PriceStart , End_of_Day, PriceEnd, clrBlack);
+      ObjectCreate(chartID, objectName, OBJ_FIBO,0 , Start_time_bars, PriceStart , Clear_Time, PriceEnd, clrBlack);
       
       
       // Set color and style of the FIB Levels
@@ -205,9 +205,9 @@ void FIB_Levels_In_Range() {
 //-------------------------------------------------------------- 
 void FIB_Levels_In_Range_Reversed() {
 
-   datetime Current_time = TimeCurrent();
-   datetime Start_time_range = Start_FIB_timerange;
-   datetime End_time_range = End_FIB_timerange;
+   datetime Current_time = TimeGMT();
+   datetime Start_time_range = Start_FIB;
+   datetime End_time_range = End_FIB;
    
    if(Start_time_range > Current_time){
       long chartID = ChartID();
@@ -216,8 +216,8 @@ void FIB_Levels_In_Range_Reversed() {
       if(End_time_range >= Current_time){
          End_time_range = Current_time;
       }
-      if(End_of_Day >= Current_time){
-         End_of_Day = Current_time;
+      if(Clear_Time >= Current_time){
+         Clear_Time = Current_time;
       }
       
       long chartID = ChartID();
@@ -239,7 +239,7 @@ void FIB_Levels_In_Range_Reversed() {
           ObjectDelete(0, objectName);
           
       // Create rectangle to highlight the session
-      ObjectCreate(chartID, objectName, OBJ_FIBO,0 , Start_time_bars, PriceStart , End_of_Day, PriceEnd, clrBlack);
+      ObjectCreate(chartID, objectName, OBJ_FIBO,0 , Start_time_bars, PriceStart , Clear_Time, PriceEnd, clrBlack);
       
       
       // Set color and style of the FIB Levels

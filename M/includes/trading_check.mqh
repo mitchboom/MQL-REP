@@ -43,11 +43,10 @@ double pipSize = F_getUniversalPipSize();
 // FUNCTION: Check for PIP range
 bool F_in_pip_range(){
    // calculating the PRICE RANGE of the Fibonacci high and low:  
-   double ticksize = SymbolInfoDouble(gSymbol,SYMBOL_TRADE_TICK_SIZE);
-   double range_price = NormalizeDouble(myLevels.High_of_FIB_Range-myLevels.Low_of_FIB_Range,gDigits);
-   double range_price_in_pips = NormalizeDouble( (range_price / ticksize)/pipSize, 1);
-   double min_tick_range = NormalizeDouble(ticksize * min_pips_range*pipSize,gDigits);
-   double max_tick_range = NormalizeDouble(ticksize * max_pips_range*pipSize,gDigits);
+   double range_price = NormalizeDouble(myLevels.High_of_FIB_Range - myLevels.Low_of_FIB_Range, gDigits);
+   double range_price_in_pips = NormalizeDouble(range_price / pipSize, 1);
+   double min_tick_range = NormalizeDouble(min_pips_range * pipSize, gDigits);
+   double max_tick_range = NormalizeDouble(max_pips_range * pipSize, gDigits);
    
 
    if (range_price >= min_tick_range && range_price <= max_tick_range){

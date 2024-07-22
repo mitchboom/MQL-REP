@@ -10,12 +10,7 @@ double Reversed_FIB_Level_TP = FIB_Level_Entry - MathAbs(FIB_Level_TP - FIB_Leve
 double Reversed_FIB_Level_SL = FIB_Level_TP;
 
 
-datetime Start_FIB = StringToTime(TimeEnumToString(Start_Fibonacci_Timerange));
-datetime End_FIB = StringToTime(TimeEnumToString(End_Fibonacci_Timerange));
-datetime Start_Order_timerange = End_FIB;
-datetime End_Order_timerange = StringToTime(TimeEnumToString(End_Trade_Order_Timerange));
-datetime Clear_Time = StringToTime(TimeEnumToString(End_Of_Trading_Day));
-datetime End_of_Day = StringToTime("23:59");
+datetime Start_FIB, End_FIB, Start_Order_timerange, End_Order_timerange, Clear_Time;
 
 
 struct FibLevels {
@@ -44,9 +39,11 @@ struct FibLevels {
 };
 
 
+FibLevels myLevels;
+
 
 //if(End_FIB_timerange < TimeGMT() && End_FIB_timerange + 60 > TimeGMT()){
-FibLevels f_CalculateFibLevels() {
+FibLevels F_CalculateFibLevels() {
     FibLevels levels;
     double GlobalFibLevels[8];
     double GlobalFibLevelsHedge[4];
@@ -110,5 +107,3 @@ FibLevels f_CalculateFibLevels() {
 
     return levels;
 }
-
-FibLevels myLevels = f_CalculateFibLevels();
