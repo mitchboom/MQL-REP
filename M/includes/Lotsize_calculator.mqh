@@ -63,7 +63,7 @@ double F_positionsize_percentage(double openPrice, double slPrice, double risk_p
    stopValue *= tickValue;
    
    //calculating risk percentage
-   risk_percentage_f /= 100;
+   //risk_percentage_f /= 100;
    risk_percentage_f *= AccountInfoDouble(ACCOUNT_BALANCE);
    
    //calculate max. size value
@@ -82,15 +82,15 @@ double F_positionsize_percentage(double openPrice, double slPrice, double risk_p
 
 
 // Function to calculate lot size based on risk type
-double F_calculateLotSize(double entryPrice, double stopLossPrice, double risk, double riskPercentage, int riskType) {
-    double lotSize = 0.0;
+double F_calculateLotSize(double entryPrice, double stopLossPrice) {
+    double lotSize = 0.0;   
 
-    switch(riskType) {
+    switch(Risk_Type) {
         case Option1:
-            lotSize = F_positionsize_value(entryPrice, stopLossPrice, risk);
+            lotSize = F_positionsize_value(entryPrice, stopLossPrice, Risk);
             break;
         case Option2:
-            lotSize = F_positionsize_percentage(entryPrice, stopLossPrice, riskPercentage);
+            lotSize = F_positionsize_percentage(entryPrice, stopLossPrice, Risk);
             break;
     }
 

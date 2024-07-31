@@ -24,28 +24,13 @@ bool F_CheckBuyConditions() {
         }
     }
 
-    if(relevantTradesCount < 1 && currentAskPrice >= myLevels.Entry_BUY_STOP && F_time_in_order_range() && !buyTriggeredToday) {
+    if(relevantTradesCount < 1 && currentAskPrice >= myLevels.Entry_BUY_STOP && !buyTriggeredToday && !sellTriggeredToday) {
         buyTriggeredToday = true;  // Set the flag to true after buy condition is met
         return true;
     }
     return false;
 }
 
-
-
-
-// FUNCTION: Check and Execute Hedge Sell
-void CheckAndExecuteHedge() {
-    double currentBidPrice = SymbolInfoDouble(_Symbol, SYMBOL_BID);
-    if (!hedgeTriggered && buyHit && !sellHit && currentBidPrice <= myLevels.SL_BUY_STOP) {
-    
-        hedgeTriggered = true;
-    }
-}
-
-
-
-// Global variable to control sell execution
 
 
 // FUNCTION: Check SELL conditions
@@ -64,8 +49,9 @@ bool F_CheckSellConditions() {
         }
     }
 
-    if(relevantTradesCount < 1 && currentBidPrice <= myLevels.Entry_SELL_STOP && F_time_in_order_range() && !sellTriggeredToday) {
+    if(relevantTradesCount < 1 && currentBidPrice <= myLevels.Entry_SELL_STOP && !buyTriggeredToday && !sellTriggeredToday) {
         sellTriggeredToday = true;  // Set the flag to true after sell condition is met
+        
         return true;
     }
     return false;
@@ -74,23 +60,44 @@ bool F_CheckSellConditions() {
 
 
 // FUNCTION: Check and Execute Hedge Sell
-void CheckAndExecuteHedgeSell() {
-    double currentAskPrice = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
-    if (!hedgeTriggered && sellHit && !buyHit && currentAskPrice >= myLevels.SL_SELL_STOP) {
+bool F_CheckHedgeSell() {
+    if (tpbuyHit || hedgeTriggered) return false;  // Prevents re-triggering within the same day
+    
+    double currentBidPrice = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+    if (!hedgeTriggered && !sellTriggeredToday && currentBidPrice <= myLevels.SL_BUY_STOP) {
     
         hedgeTriggered = true;
-
+        tpbuyHit = true;
+        
+        return true;
     }
+    return false;
 }
 
 
 
+// FUNCTION: Check and Execute Hedge Buy
+bool F_CheckHedgeBuy() {
+    if (tpsellHit || hedgeTriggered) return false;  // Prevents re-triggering within the same day
+    
+    double currentAskPrice = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+    if (!hedgeTriggered && !buyTriggeredToday && currentAskPrice >= myLevels.SL_SELL_STOP) {
+    
+        hedgeTriggered = true;
+        tpsellHit = true;
+        
+        return true;
+    }
+    return false;
+}
+
+
 
 //-----------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------
 
-
+/*
 
 // FUNCTION: Check BUY LIMIT conditions
 bool F_CheckBuyLimitConditions() {
@@ -98,7 +105,7 @@ bool F_CheckBuyLimitConditions() {
 
     double currentAskPrice = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
     int totalBuyPositions = 0;
-    buyHit = false;
+    buyTriggeredToday = false;
 
     // Check open positions and gather data
     for (int i = PositionsTotal() - 1; i >= 0; i--) {
@@ -107,7 +114,7 @@ bool F_CheckBuyLimitConditions() {
             PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_BUY &&
             PositionGetInteger(POSITION_MAGIC) == Magic_Number) {
             totalBuyPositions++;
-            buyHit = true;
+            buyTriggeredToday = true;
         }
     }
 

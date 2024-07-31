@@ -10,7 +10,7 @@ double Reversed_FIB_Level_TP = FIB_Level_Entry - MathAbs(FIB_Level_TP - FIB_Leve
 double Reversed_FIB_Level_SL = FIB_Level_TP;
 
 
-datetime Start_FIB, End_FIB, Start_Order_timerange, End_Order_timerange, Clear_Time;
+datetime Start_FIB, End_FIB, Start_Order_timerange, End_Order_timerange, End_Day, Clear_Time;
 
 
 struct FibLevels {

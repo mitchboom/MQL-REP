@@ -7,8 +7,6 @@ bool buyTriggeredToday = false;
 bool sellTriggeredToday = false;
 bool hedgeTriggered = false;
 
-bool buyHit = false;
-bool sellHit = false;
 bool tpbuyHit = false;
 bool tpsellHit = false;   
 
@@ -58,18 +56,20 @@ bool F_in_pip_range(){
 
 
 
-// FUNCTION: Reset daily triggers
-void F_reset_triggers() {
-    if (TimeGMT() > Clear_Time - 10 && TimeGMT() < Clear_Time + 10) {
-        buyTriggeredToday = false;
-    }
+// FUNCTION: Is order in timerange:
+bool F_time_in_order_range(){
+   if(TimeGMT() >= Start_Order_timerange && TimeGMT() < End_Order_timerange){
+      return true;
+   }
+
+   return false;   
 }
 
 
 
-// FUNCTION: Is order in timerange:
-bool F_time_in_order_range(){
-   if(TimeGMT() >= Start_Order_timerange && TimeGMT() < End_Order_timerange){
+// FUNCTION: Is hedge in trading time:
+bool F_time_in_trade_range(){
+   if(TimeGMT() >= Start_Order_timerange && TimeGMT() < End_Day){
       return true;
    }
 
