@@ -6,6 +6,7 @@
 bool buyTriggeredToday = false;
 bool sellTriggeredToday = false;
 bool hedgeTriggered = false;
+bool activateHedge = false;
 
 bool tpbuyHit = false;
 bool tpsellHit = false;   
@@ -21,9 +22,9 @@ double F_getUniversalPipSize() {
     // Adjust pip size calculation based on the number of digits
     switch (digits) {
         case 1:
-            return pointSize * 1000;   // Example: XAUUSD, US30 (index)
+            return pointSize * 1000;   // Example: XAUUSD
         case 2:
-            return pointSize * 100;    // Example: some commodities or indices
+            return pointSize * 100;    // Example: US30 (index)
         case 3:
             return pointSize * 10;     // Example: JPY pairs
         case 4:
@@ -95,9 +96,31 @@ bool F_use_hedging(){
 
 
 
+
+bool CheckExtraBuyConditions() {
+
+   if (inpEmaDirection != EMA_OFF && EmaCondition() != 1) {
+     return false;
+   }
+   
+   return true;
+}
+
+//+------------------------------------------------------------------+
+//| Function to check sell conditions including trade time delay     |
+//+------------------------------------------------------------------+
+bool CheckExtraSellConditions() {
+
+   if (inpEmaDirection != EMA_OFF && EmaCondition() != -1) {
+      return false;
+   }
+   
+   return true;
+}
+
+
 // FUNCTION: custom trading days
-bool F_CheckTradingDays()
-  {
+bool F_CheckTradingDays(){
    
    // Get the current day of the week
    MqlDateTime currentMqlDateTime;
@@ -105,8 +128,7 @@ bool F_CheckTradingDays()
    int day_of_week = currentMqlDateTime.day_of_week;
 
    // Check if today is one of the excluded days
-   switch (day_of_week)
-     {
+   switch (day_of_week){
       case 0: return !excludeSunday;    // Sunday
       case 1: return !excludeMonday;    // Monday
       case 2: return !excludeTuesday;   // Tuesday
@@ -115,5 +137,5 @@ bool F_CheckTradingDays()
       case 5: return !excludeFriday;    // Friday
       case 6: return !excludeSaturday;  // Saturday
       default: return true;  // Should never happen, but just in case
-     }
-  }
+    }
+}

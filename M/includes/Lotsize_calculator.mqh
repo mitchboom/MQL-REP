@@ -11,8 +11,9 @@ double F_positionsize_value(double openPrice, double slPrice, double risk_value_
    double size=0; //lotsize you want to determine
    double distance=0; //distance between openPrice en slPrice 
    double stopValue=0; 
-   double tickValue= SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_VALUE); //Based on 1 Lot Size
-   double tickSize= SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+   double tickValue= SymbolInfoDouble(gSymbol,SYMBOL_TRADE_TICK_VALUE); //Based on 1 Lot Size
+   double tickSize= SymbolInfoDouble(gSymbol,SYMBOL_TRADE_TICK_SIZE);
+   double VolumeStep = SymbolInfoDouble(gSymbol,SYMBOL_VOLUME_STEP);
    
    //calculate distance:
    distance = openPrice - slPrice;
@@ -31,10 +32,13 @@ double F_positionsize_value(double openPrice, double slPrice, double risk_value_
    size *= 100;
    size = MathFloor(size);
    size /= 100;
-   size = MathMax(0.01, size); //To make sure every position gets opened with at least the minimum lot size of 0.01
+   size = MathMax( VolumeStep , size); //To make sure every position gets opened with at least the minimum lot size of 0.01
+   size = (int)(size / VolumeStep) * VolumeStep; //To get the least possible volume (lots) step
    
-   //returning size
-   return size;
+   double lots = NormalizeDouble(size, CountDecimals(VolumeStep));
+   
+   //returning lots
+   return lots;
     
 }
 
@@ -49,8 +53,9 @@ double F_positionsize_percentage(double openPrice, double slPrice, double risk_p
    double size=0; //lotsize you want to determine
    double distance=0; //distance between openPrice en slPrice 
    double stopValue=0; 
-   double tickValue= SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_VALUE); //Based on 1 Lot Size
-   double tickSize= SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+   double tickValue= SymbolInfoDouble(gSymbol,SYMBOL_TRADE_TICK_VALUE); //Based on 1 Lot Size
+   double tickSize= SymbolInfoDouble(gSymbol,SYMBOL_TRADE_TICK_SIZE);
+   double VolumeStep = SymbolInfoDouble(gSymbol,SYMBOL_VOLUME_STEP);
    
    //calculate distance:
    distance = openPrice - slPrice;
@@ -73,10 +78,13 @@ double F_positionsize_percentage(double openPrice, double slPrice, double risk_p
    size *= 100;
    size = MathFloor(size);
    size /= 100;
-   size = MathMax(0.01, size); //To make sure every position gets opened with at least the minimum lot size of 0.01
+   size = MathMax(VolumeStep, size); //To make sure every position gets opened with at least the minimum lot size of 0.01
+   size = (int)(size / VolumeStep) * VolumeStep; //To get the least possible volume (lots) step
    
-   //returning size
-   return size;
+   double lots = NormalizeDouble(size, CountDecimals(VolumeStep));
+   
+   //returning lots
+   return lots;
      
 }
 
@@ -95,4 +103,15 @@ double F_calculateLotSize(double entryPrice, double stopLossPrice) {
     }
 
     return lotSize;
+}
+
+
+
+int CountDecimals(double number) {
+    string numStr = DoubleToString(number, 16);  // Convert number to string with maximum precision
+    int pointPos = StringFind(numStr, ".");      // Find position of the decimal point
+    if (pointPos < 0) return 0;                  // No decimal point found
+    
+    // Count the number of digits after the decimal point
+    return StringLen(numStr) - pointPos - 1;
 }
