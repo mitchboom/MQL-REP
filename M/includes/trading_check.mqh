@@ -1,12 +1,15 @@
 #include <MQL-REP\Inputs.mqh>
 #include <MQL-REP\FIB_level_calculation.mqh>
-
+#include <MQL-REP\EMA_condition.mqh>
 
 // Global variable to control buy execution
 bool buyTriggeredToday = false;
 bool sellTriggeredToday = false;
 bool hedgeTriggered = false;
 bool activateHedge = false;
+
+bool buyInvalid = false;
+bool sellInvalid = false;
 
 bool tpbuyHit = false;
 bool tpsellHit = false;   

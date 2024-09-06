@@ -10,7 +10,7 @@
 
 // FUNCTION: Check BUY conditions
 bool F_CheckBuyConditions() {
-    if (buyTriggeredToday) return false;  // Prevents re-triggering within the same day
+    if (buyTriggeredToday || buyInvalid) return false;  // Prevents re-triggering within the same day
 
     double currentAskPrice = SymbolInfoDouble(gSymbol, SYMBOL_ASK);
     int relevantTradesCount = 0;  // To count relevant trades
@@ -28,10 +28,16 @@ bool F_CheckBuyConditions() {
       activateHedge = true;
     }
 
-    if(relevantTradesCount < 1 && currentAskPrice >= myLevels.Entry_BUY_STOP && !buyTriggeredToday && !sellTriggeredToday) {
+    if(relevantTradesCount < 1 && currentAskPrice >= myLevels.Entry_BUY_STOP && !buyTriggeredToday && !sellTriggeredToday && !buyInvalid) {
+        
+        buyInvalid = true;
+        
+        if(CheckExtraBuyConditions()){
         buyTriggeredToday = true;  // Set the flag to true after buy condition is met
         return true;
+        }
     }
+    
     return false;
 }
 
@@ -39,7 +45,7 @@ bool F_CheckBuyConditions() {
 
 // FUNCTION: Check SELL conditions
 bool F_CheckSellConditions() {
-    if (sellTriggeredToday) return false;  // Prevents re-triggering within the same day
+    if (sellTriggeredToday || sellInvalid) return false;  // Prevents re-triggering within the same day
 
     double currentBidPrice = SymbolInfoDouble(gSymbol, SYMBOL_BID);
     int relevantTradesCount = 0;  // To count relevant trades
@@ -57,11 +63,16 @@ bool F_CheckSellConditions() {
       activateHedge = true;
     }
 
-    if(relevantTradesCount < 1 && currentBidPrice <= myLevels.Entry_SELL_STOP && !buyTriggeredToday && !sellTriggeredToday) {
-        sellTriggeredToday = true;  // Set the flag to true after sell condition is met
+    if(relevantTradesCount < 1 && currentBidPrice <= myLevels.Entry_SELL_STOP && !buyTriggeredToday && !sellTriggeredToday && !sellInvalid) {
+    
+        sellInvalid = true;
         
+        if(CheckExtraSellConditions()){
+        sellTriggeredToday = true;  // Set the flag to true after sell condition is met        
         return true;
+        }
     }
+    
     return false;
 }
 
@@ -124,7 +135,7 @@ bool F_CheckHedgeBuy() {
 
 // FUNCTION: Check BUY conditions
 bool F_CheckBuyLimitConditions() {
-    if (buyTriggeredToday) return false;  // Prevents re-triggering within the same day
+    if (buyTriggeredToday || buyInvalid) return false;  // Prevents re-triggering within the same day
 
     double currentAskPrice = SymbolInfoDouble(gSymbol, SYMBOL_ASK);
     int relevantTradesCount = 0;  // To count relevant trades
@@ -142,10 +153,16 @@ bool F_CheckBuyLimitConditions() {
       activateHedge = true;
     }
 
-    if(relevantTradesCount < 1 && currentAskPrice <= myLevels.Entry_BUY_LIMIT && !buyTriggeredToday && !sellTriggeredToday) {
+    if(relevantTradesCount < 1 && currentAskPrice <= myLevels.Entry_BUY_LIMIT && !buyTriggeredToday && !sellTriggeredToday && !buyInvalid) {
+        
+        buyInvalid = true;
+        
+        if(CheckExtraBuyConditions()){
         buyTriggeredToday = true;  // Set the flag to true after buy condition is met
         return true;
+        }
     }
+    
     return false;
 }
 
@@ -153,7 +170,7 @@ bool F_CheckBuyLimitConditions() {
 
 // FUNCTION: Check SELL conditions
 bool F_CheckSellLimitConditions() {
-    if (sellTriggeredToday) return false;  // Prevents re-triggering within the same day
+    if (sellTriggeredToday || sellInvalid) return false;  // Prevents re-triggering within the same day
 
     double currentBidPrice = SymbolInfoDouble(gSymbol, SYMBOL_BID);
     int relevantTradesCount = 0;  // To count relevant trades
@@ -171,10 +188,16 @@ bool F_CheckSellLimitConditions() {
       activateHedge = true;
     }
 
-    if(relevantTradesCount < 1 && currentBidPrice >= myLevels.Entry_SELL_LIMIT && !buyTriggeredToday && !sellTriggeredToday) {
-        sellTriggeredToday = true;  // Set the flag to true after sell condition is met
-        return true;
-    }
+    if(relevantTradesCount < 1 && currentBidPrice >= myLevels.Entry_SELL_LIMIT && !buyTriggeredToday && !sellTriggeredToday && !sellInvalid) {
+    
+        sellInvalid = true;
+         
+        if(CheckExtraSellConditions()){
+          sellTriggeredToday = true;  // Set the flag to true after sell condition is met
+          return true;
+        }
+    }  
+    
     return false;
 }
 
