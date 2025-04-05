@@ -16,23 +16,48 @@ int EmaCondition()
        }
     }
 
-    switch(inpEmaDirection) {
-        case EMA_WITH_TREND:
-            // Check alignment with the trend
-            if (MaFast[1] > MaSlow[1]) return 1; // Bullish trend, Buy
-            if (MaFast[1] < MaSlow[1]) return -1; // Bearish trend, Sell
-            break;
+    if (inpEmaMode == EMA_TWO_LINE){
+    
+       switch(inpEmaDirection) {
+           case EMA_WITH_TREND:
+               // Check alignment with the trend
+               if (MaFast[1] > MaSlow[1]) return 1; // Bullish trend, Buy
+               if (MaFast[1] < MaSlow[1]) return -1; // Bearish trend, Sell
+               break;
+   
+           case EMA_AGAINST_TREND:
+               // Check alignment against the trend
+               if (MaFast[1] < MaSlow[1]) return 1; // Bearish trend, Buy
+               if (MaFast[1] > MaSlow[1]) return -1; // Bullish trend, Sell
+               break;
+   
+           case EMA_OFF:
+               // Do not use EMA for trend decision
+               return 0; // Neutral condition as EMA checks are off
+         }
+      }  
+      else if (inpEmaMode == EMA_ONE_LINE){
+    
+      double currentAskPrice = SymbolInfoDouble(gSymbol, SYMBOL_ASK);
+      double currentBidPrice = SymbolInfoDouble(gSymbol, SYMBOL_BID);
+    
+         switch (inpEmaDirection){
+            case EMA_WITH_TREND:
+                if (currentAskPrice > MaFast[1]) return 1;        // Buy
+                if (currentBidPrice < MaFast[1]) return -1;       // Sell
+                break;
+         
+            case EMA_AGAINST_TREND:
+                if (currentAskPrice < MaFast[1]) return 1;        // Buy
+                if (currentBidPrice > MaFast[1]) return -1;       // Sell
+                break;
+                
+            case EMA_OFF:
+               // Do not use EMA for trend decision
+               return 0; // Neutral condition as EMA checks are off
+         }
+      }
 
-        case EMA_AGAINST_TREND:
-            // Check alignment against the trend
-            if (MaFast[1] < MaSlow[1]) return 1; // Bearish trend, Buy
-            if (MaFast[1] > MaSlow[1]) return -1; // Bullish trend, Sell
-            break;
-
-        case EMA_OFF:
-            // Do not use EMA for trend decision
-            return 0; // Neutral condition as EMA checks are off
-    }
 
     return 0; // Default return for no clear trend or off state
 }
